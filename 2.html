@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Cá Nhân & CV</title>
+    
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header, footer {
+            background-color: #b71c1c; 
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        main {
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: auto;
+            min-height: 60vh;
+        }
+        #toggle-bg-btn {
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: white;
+            color: #b71c1c;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        /* Style cho phần CV bên trong React */
+        .cv-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .project-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Cấu trúc HTML cơ bản -->
+    <header>
+        <h1 id="greeting-text">Đang tải lời chào...</h1>
+        <button id="toggle-bg-btn">Đổi màu nền</button>
+    </header>
+
+    <nav>
+        <a href="#">Trang chủ</a>
+        <a href="#cv">Hồ sơ CV</a>
+        <a href="#contact">Liên hệ</a>
+    </nav>
+
+    
+    <main id="root"></main>
+
+    <footer>
+        <p>&copy; 2026 Trương Nhật Nam - PTIT.</p>
+    </footer>
+
+    
+    <script>
+        
+        const updateGreeting = () => {
+            const currentHour = new Date().getHours();
+            let greeting = "Chào buổi sáng!";
+            
+            if (currentHour >= 12 && currentHour < 18) {
+                greeting = "Chào buổi chiều!";
+            } else if (currentHour >= 18) {
+                greeting = "Chào buổi tối!";
+            }
+            
+            
+            const greetingElement = document.getElementById("greeting-text");
+            greetingElement.innerText = greeting + " Chào mừng đến với trang cá nhân của tôi.";
+        };
+        updateGreeting();
+
+        
+        const toggleBtn = document.getElementById("toggle-bg-btn");
+        toggleBtn.addEventListener("click", () => {
+            const body = document.body;
+            
+            
+            if (body.style.backgroundColor === "rgb(44, 62, 80)") {
+                
+                body.style.backgroundColor = "#f4f6f8";
+                body.style.color = "black";
+            } else {
+                
+                body.style.backgroundColor = "#2c3e50";
+                body.style.color = "white";
+            }
+        });
+    </script>
+
+    
+    <script type="text/babel">
+        // Dữ liệu mảng truyền qua props
+        const skillsData = [
+            "Python (Chứng chỉ COSPRO)",
+            "Lập trình nhúng, Hệ thống AIoT",
+            "HTML, CSS, JavaScript, ReactJS",
+            "Tiếng Anh (IELTS)"
+        ];
+
+        const projectsData = [
+            {
+                name: "Hệ thống nhà thông minh AIoT",
+                description: "Nghiên cứu và phát triển ứng dụng trí tuệ nhân tạo kết hợp vạn vật kết nối cho nhà ở."
+            },
+            {
+                name: "Web cá nhân đa nền tảng",
+                description: "Kết hợp linh hoạt giữa Vanilla JS và ReactJS để tối ưu hóa UI/UX."
+            }
+        ];
+
+        
+        const PersonalInfo = () => (
+            <div style={{ textAlign: 'center', borderBottom: '2px solid #eee', paddingBottom: '20px', marginBottom: '20px' }}>
+                <h2 style={{ color: '#c0392b', margin: '0 0 10px 0' }}>Trương Nhật Nam</h2>
+                <p style={{ margin: '5px 0' }}>Sinh viên chuyên ngành Kỹ thuật AIoT</p>
+                <p style={{ margin: '5px 0', fontWeight: 'bold' }}>Học viện Công nghệ Bưu chính Viễn thông (PTIT)</p>
+            </div>
+        );
+
+        
+        const SkillList = ({ skills }) => (
+            <ul style={{ lineHeight: '1.8' }}>
+                {skills.map((skill, index) => (
+                    <li key={index}>{skill}</li>
+                ))}
+            </ul>
+        );
+
+        
+        const ProjectList = ({ projects }) => (
+            <div>
+                {projects.map((project, index) => (
+                    <div key={index} className="project-item">
+                        <h4 style={{ margin: '0 0 5px 0', color: '#2980b9' }}>{project.name}</h4>
+                        <p style={{ margin: '0' }}>{project.description}</p>
+                    </div>
+                ))}
+            </div>
+        );
+
+        
+        const Section = ({ title, children }) => (
+            <div style={{ marginBottom: '25px' }}>
+                <h3 style={{ 
+                    color: '#c0392b', 
+                    borderLeft: '4px solid #c0392b', 
+                    paddingLeft: '10px' 
+                }}>
+                    {title}
+                </h3>
+                <div style={{ paddingLeft: '14px' }}>
+                    {children}
+                </div>
+            </div>
+        );
+
+        
+        const CVApp = () => (
+            <div className="cv-container">
+                <PersonalInfo />
+                
+                <Section title="Kỹ năng chuyên môn">
+                    <SkillList skills={skillsData} />
+                </Section>
+
+                <Section title="Dự án tiêu biểu">
+                    <ProjectList projects={projectsData} />
+                </Section>
+            </div>
+        );
+
+        
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<CVApp />);
+    </script>
+</body>
+</html>
